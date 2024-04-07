@@ -99,42 +99,82 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return 0;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+               
+  /* Initialize a variable uniqueElements to keep track of the number of unique elements
+Iterate through the array starting from the second element (index 1).
+ If the current element is not the same as the previous element,  
+  copy the current element to the uniqueElements index and increment uniqueElements.*/
 
-        /*
-        
-        Question 2:
-        Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 
-        Note that you must do this in-place without making a copy of the array.
+                int uniqueElements = 1;
+                 for (int i = 1; i < nums.Length; i++)
+                 {
+                     if (nums[i] != nums[i - 1])
+                     {
+                         nums[uniqueElements] = nums[i];
+                         uniqueElements++;
+                     }
+                 }
 
-        Example 1:
+                 return uniqueElements;
+             }
+             catch (Exception)
+             {
+                 throw;
+             }
+         }
 
-        Input: nums = [0,1,0,3,12]
-        Output: [1,3,12,0,0]
-        Example 2:
+         /*
 
-        Input: nums = [0]
-        Output: [0]
- 
-        Constraints:
+         Question 2:
+         Given an integer array nums, move all 0's to the end of it while maintaining the 
+         relative order of the non-zero elements.
 
-        1 <= nums.length <= 104
-        -231 <= nums[i] <= 231 - 1
-        */
+         Note that you must do this in-place without making a copy of the array.
 
-        public static IList<int> MoveZeroes(int[] nums)
+         Example 1:
+
+         Input: nums = [0,1,0,3,12]
+         Output: [1,3,12,0,0]
+         Example 2:
+
+         Input: nums = [0]
+         Output: [0]
+
+         Constraints:
+
+         1 <= nums.length <= 104
+         -231 <= nums[i] <= 231 - 1
+         */
+
+                public static IList<int> MoveZeroes(int[] nums)
         {
             try
+
+     /* Initialize a variable nonZeroIndex to keep track of the index where the 
+     next non-zero element should be placed.
+      Iterate through the array and if the current element is non-zero,
+     copy it to the nonZeroIndex position and increment nonZeroIndex.
+      After the first loop, all the non-zero elements are in their correct positions at the
+     beginning of the array.
+     In the second loop,  fill the remaining elements with 0.
+     Finally, return the modified array as a new List<int>.
+        */
+
             {
-                // Write your code here and you can modify the return value according to the requirements
+                int nonZeroIndex = 0;
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (nums[i] != 0)
+                    {
+                        nums[nonZeroIndex] = nums[i];
+                        nonZeroIndex++;
+                    }
+                }
+                for (int i = nonZeroIndex; i < nums.Length; i++)
+                {
+                    nums[i] = 0;
+                }
                 return new List<int>();
             }
             catch (Exception)
@@ -147,10 +187,8 @@ namespace ISM6225_Spring_2024_Assignment_2
 
         Question 3:
         Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
-
+       
         Notice that the solution set must not contain duplicate triplets.
-
- 
 
         Example 1:
 
@@ -184,9 +222,50 @@ namespace ISM6225_Spring_2024_Assignment_2
         public static IList<IList<int>> ThreeSum(int[] nums)
         {
             try
+            /*
+            1. Initialize an empty list result to store the triplets.
+            2. Sort the input array nums to make the subsequent operations easier.
+            3. Iterate through the array with the first pointer i from 0 to n-2 (where n is the length of the array).
+            4. Skip the duplicates of the first element to avoid generating duplicate triplets.
+            5. For each i, use two pointers left and right to find two other elements that sum up to -nums[i].
+            6. If the sum is 0, we add the triplet to the result list and then move the left and right pointers past any duplicates.
+            7.  If the sum is less than 0, we move the left pointer to the right, and if the sum is greater than 0, we move the right pointer to the left.
+            8.  Finally, we return the result list.
+            */
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return new List<IList<int>>();
+                List<IList<int>> result = new List<IList<int>>();
+                Array.Sort(nums);
+                int n = nums.Length;
+                for (int i = 0; i < n - 2; i++)
+                {
+                    if (i > 0 && nums[i] == nums[i - 1])
+                        continue;
+                    int left = i + 1;
+                    int right = n - 1;
+                    while (left < right)
+                    {
+                        int sum = nums[i] + nums[left] + nums[right];
+                        if (sum == 0)
+                        {
+                            result.Add(new List<int> { nums[i], nums[left], nums[right] });
+                            while (left < right && nums[left] == nums[left + 1])
+                                left++;
+                            while (left < right && nums[right] == nums[right - 1])
+                                right--;
+                            left++;
+                            right--;
+                        }
+                        else if (sum < 0)
+                        {
+                            left++;
+                        }
+                        else
+                        {
+                            right--;
+                        }
+                    }
+                }
+                return result;
             }
             catch (Exception)
             {
@@ -219,9 +298,31 @@ namespace ISM6225_Spring_2024_Assignment_2
         public static int FindMaxConsecutiveOnes(int[] nums)
         {
             try
+
+            /*
+          1. Initialize two variables: maxOnes to keep track of the maximum number of consecutive ones, and currentOnes to keep track of the current count of consecutive ones.
+           2. Iterate through the input array nums.
+           3.  If the current element is 1, we increment currentOnes.
+           4.  If the current element is 0, we update maxOnes to be the maximum of maxOnes and currentOnes, and then reset currentOnes to 0.
+           5.  After the loop, we return the maximum of maxOnes and currentOnes (in case the last sequence of 1s was the longest).
+            */
+
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                int maxOnes = 0;
+                int currentOnes = 0;
+                foreach (int num in nums)
+                {
+                    if (num == 1)
+                    {
+                        currentOnes++;
+                    }
+                    else
+                    {
+                        maxOnes = Math.Max(maxOnes, currentOnes);
+                        currentOnes = 0;
+                    }
+                }
+                return Math.Max(maxOnes, currentOnes);
             }
             catch (Exception)
             {
@@ -255,9 +356,27 @@ namespace ISM6225_Spring_2024_Assignment_2
         public static int BinaryToDecimal(int binary)
         {
             try
+
+            /* 1. Initialize two variables: 
+            decimal_value to store the final decimal value, and base_value to keep track of the current place value (1, 2, 4, 8, etc.).
+        2.  Iterate through the binary number by repeatedly dividing it by 10 and getting the remainder.
+        3.  For each remainder, add the product of the remainder and the current base value to the decimal_value.
+        4. Update the base_value by multiplying it by 2 (since each digit in binary represents a power of 2).
+        5. Finally, return the decimal_value.
+
+                        */
+
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                int decimal_value = 0;
+                int base_value = 1;
+                while (binary != 0)
+                {
+                    int remainder = binary % 10;
+                    decimal_value += remainder * base_value;
+                    base_value *= 2;
+                    binary /= 10;
+                }
+                return decimal_value;
             }
             catch (Exception)
             {
@@ -294,8 +413,50 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return 0;
+
+                /*
+1. If the input array has less than 2 elements, we return 0 as the maximum gap is 0.
+2. Find the minimum and maximum values in the input array.
+3. Calculate the bucket size and the number of buckets required to divide the range of values.
+4. Initialize two arrays bucket_min and bucket_max to keep track of the minimum and maximum values in each bucket.
+5. Iterate through the input array and assign each element to its respective bucket, updating the minimum and maximum values in the bucket.
+6. iterate through the buckets and calculate the maximum gap between the maximum value of the previous bucket and the minimum value of the current bucket.
+7. eturn the maximum gap.
+
+                */
+
+
+                if (nums.Length < 2)
+                    return 0;
+
+                int min_value = nums.Min();
+                int max_value = nums.Max();
+                int bucket_size = Math.Max(1, (max_value - min_value) / (nums.Length - 1));
+                int bucket_count = (max_value - min_value) / bucket_size + 1;
+
+                int[] bucket_min = new int[bucket_count];
+                int[] bucket_max = new int[bucket_count];
+                Array.Fill(bucket_min, int.MaxValue);
+                Array.Fill(bucket_max, int.MinValue);
+
+                foreach (int num in nums)
+                {
+                    int bucket_index = (num - min_value) / bucket_size;
+                    bucket_min[bucket_index] = Math.Min(bucket_min[bucket_index], num);
+                    bucket_max[bucket_index] = Math.Max(bucket_max[bucket_index], num);
+                }
+
+                int max_gap = 0;
+                int prev_max = min_value;
+                for (int i = 0; i < bucket_count; i++)
+                {
+                    if (bucket_min[i] == int.MaxValue && bucket_max[i] == int.MinValue)
+                        continue;
+                    max_gap = Math.Max(max_gap, bucket_min[i] - prev_max);
+                    prev_max = bucket_max[i];
+                }
+
+                return max_gap;
             }
             catch (Exception)
             {
@@ -334,7 +495,23 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
+                /*
+                1. First sort the input array nums in ascending order.
+                2. Start from the last element of the array and iterate backwards until we reach the third element.
+                3.  For each triplet of elements, we check if the sum of the two smaller elements is greater than the largest element.
+                4. If the condition is satisfied, we return the sum of the three elements, which represents the largest perimeter of a triangle.
+               5.  If we cannot find a valid triangle, we return 0.
+
+                */
+
+
+
+                Array.Sort(nums);
+                for (int i = nums.Length - 1; i >= 2; i--)
+                {
+                    if (nums[i - 2] + nums[i - 1] > nums[i])
+                        return nums[i - 2] + nums[i - 1] + nums[i];
+                }
                 return 0;
             }
             catch (Exception)
@@ -382,14 +559,24 @@ namespace ISM6225_Spring_2024_Assignment_2
         1 <= part.length <= 1000
         s​​​​​​ and part consists of lowercase English letters.
 
+        /*
+        1. Use a while loop to repeatedly remove the leftmost occurrence of the part substring from the s string.
+      2.Inside the loop, find the index of the leftmost occurrence of part using the IndexOf method.
+      3. Create a new string by concatenating the substring before the occurrence of part and the substring after the occurrence of part.
+      4. Repeat this process until there are no more occurrences of part in the s string.
+      5. Finally, we return the modified s string.
         */
 
         public static string RemoveOccurrences(string s, string part)
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return "";
+                while (s.Contains(part))
+                {
+                    int index = s.IndexOf(part);
+                    s = s.Substring(0, index) + s.Substring(index + part.Length);
+                }
+                return s;
             }
             catch (Exception)
             {
